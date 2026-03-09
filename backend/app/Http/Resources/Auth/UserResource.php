@@ -7,8 +7,14 @@ namespace App\Http\Resources\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @mixin \App\Domain\Auth\Models\User
+ */
 class UserResource extends JsonResource
 {
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(Request $request): array
     {
         return [
@@ -21,7 +27,7 @@ class UserResource extends JsonResource
             'avatar_url' => $this->avatar_url,
             'email_verified_at' => $this->email_verified_at,
             'tenants' => TenantResource::collection($this->whenLoaded('tenants')),
-            'created_at' => $this->created_at
+            'created_at' => $this->created_at,
         ];
     }
 }

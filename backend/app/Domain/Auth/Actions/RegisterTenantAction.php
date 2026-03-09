@@ -36,14 +36,14 @@ final class RegisterTenantAction
                 'last_name' => $data->lastName,
                 'email' => $data->email,
                 'password' => $data->password,
-                'phone' => $data->phone
+                'phone' => $data->phone,
             ]);
 
             $tenant->users()->attach($user->id, [
                 'id' => Str::uuid()->toString(),
                 'role' => 'owner',
                 'is_default' => true,
-                'joined_at' => now()
+                'joined_at' => now(),
             ]);
 
             $token = $user->createToken('auth-token')->plainTextToken;
@@ -51,7 +51,7 @@ final class RegisterTenantAction
             return [
                 'tenant' => $tenant,
                 'user' => $user,
-                'token' => $token
+                'token' => $token,
             ];
         });
     }

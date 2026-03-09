@@ -17,12 +17,15 @@ class AuthenticatedResource extends JsonResource
         $this->token = $token;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(Request $request): array
     {
         return [
             'user' => new UserResource($this->resource),
             'token' => $this->token,
-            'token_type' => 'Bearer'
+            'token_type' => 'Bearer',
         ];
     }
 }

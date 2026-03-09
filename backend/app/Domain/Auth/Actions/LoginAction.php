@@ -24,7 +24,7 @@ final class LoginAction
 
         if (! $user || ! Hash::check($data->password, $user->password)) {
             throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.']
+                'email' => ['The provided credentials are incorrect.'],
             ]);
         }
 
@@ -35,7 +35,7 @@ final class LoginAction
 
         return [
             'user' => $user,
-            'token' => $token
+            'token' => $token,
         ];
     }
 }

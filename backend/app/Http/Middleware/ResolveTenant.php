@@ -17,13 +17,13 @@ class ResolveTenant
 
         if (! $tenant) {
             return response()->json([
-                'message' => 'Tenant could not be resolved. Provide X-Tenant-ID header, use a tenant subdomain, or pass ?tenant=slug.'
+                'message' => 'Tenant could not be resolved. Provide X-Tenant-ID header, use a tenant subdomain, or pass ?tenant=slug.',
             ], 404);
         }
 
         if (! $tenant->isActive()) {
             return response()->json([
-                'message' => 'This business account is inactive.'
+                'message' => 'This business account is inactive.',
             ], 403);
         }
 

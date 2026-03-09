@@ -83,7 +83,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'bookings.create',
             'bookings.update',
             'customers.view',
-            'customers.create'
+            'customers.create',
         ]);
 
         // Customer - view and manage own bookings
@@ -93,7 +93,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'staff.view',
             'bookings.view',
             'bookings.create',
-            'bookings.cancel'
+            'bookings.cancel',
         ]);
     }
 }

@@ -31,7 +31,7 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Registration successful.',
-            'data' => new AuthenticatedResource($result['user'], $result['token'])
+            'data' => new AuthenticatedResource($result['user'], $result['token']),
         ], 201);
     }
 
@@ -47,7 +47,7 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Login successful.',
-            'data' => new AuthenticatedResource($result['user'], $result['token'])
+            'data' => new AuthenticatedResource($result['user'], $result['token']),
         ]);
     }
 
@@ -58,7 +58,7 @@ class AuthController extends Controller
         $action->execute($request->user());
 
         return response()->json([
-            'message' => 'Logged out successfully.'
+            'message' => 'Logged out successfully.',
         ]);
     }
 
@@ -67,7 +67,7 @@ class AuthController extends Controller
         $request->user()->load('tenants');
 
         return response()->json([
-            'data' => new UserResource($request->user())
+            'data' => new UserResource($request->user()),
         ]);
     }
 }

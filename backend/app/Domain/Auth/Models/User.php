@@ -6,6 +6,7 @@ namespace App\Domain\Auth\Models;
 
 use App\Domain\Tenant\Models\Tenant;
 use App\Support\Traits\HasUuid;
+use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -14,10 +15,16 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
+/**
+ * @use HasFactory<UserFactory>
+ */
 class User extends Authenticatable
 {
     use HasApiTokens;
+
+    /** @use HasFactory<UserFactory> */
     use HasFactory;
+
     use HasRoles;
     use HasUuid;
     use Notifiable;
@@ -45,12 +52,20 @@ class User extends Authenticatable
         ];
     }
 
+    protected static function newFactory(): \Database\Factories\UserFactory
+    {
+        return \Database\Factories\UserFactory::new();
+    }
+
     /*
     |--------------------------------------------------------------------------
     | Relationships
     |--------------------------------------------------------------------------
     */
 
+    /**
+     * @return BelongsToMany<\App\Domain\Tenant\Models\Tenant, $this, \Illuminate\Database\Eloquent\Relations\Pivot, 'pivot'>
+     */
     public function tenants(): BelongsToMany
     {
         return $this->belongsToMany(Tenant::class, 'tenant_user')
@@ -60,6 +75,7 @@ class User extends Authenticatable
 
     public function defaultTenant(): ?Tenant
     {
+        /** @var Tenant|null */
         return $this->tenants()
             ->wherePivot('is_default', true)
             ->first();
@@ -78,12 +94,9 @@ class User extends Authenticatable
 
     public function roleInTenant(Tenant $tenant): ?string
     {
-        $pivot = $this->tenants()
-            ->where('tenants.id', $tenant->id)
-            ->first()
-            ?->pivot;
+        $match = $this->tenants()->where('tenants.id', $tenant->id)->first();
 
-        return $pivot?->role;
+        return $match?->getRelationValue('pivot')?->getAttribute('role');
     }
 
     public function isOwnerOf(Tenant $tenant): bool

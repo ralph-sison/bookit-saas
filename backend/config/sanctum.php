@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Laravel\Sanctum\Sanctum;
 
 return [
@@ -34,7 +36,7 @@ return [
     |
     */
 
-    'guard' => ['sanctum'],
+    'guard' => ['web'],
 
     /*
     |--------------------------------------------------------------------------
