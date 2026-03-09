@@ -5,5 +5,4 @@ parameters:
     paths:
         - app/
     level: 6
-    ignoreErrors: []
-    checkMissingIterableValueType: false
+    ignoreErrors: ['#Trait .* is used zero times#']
